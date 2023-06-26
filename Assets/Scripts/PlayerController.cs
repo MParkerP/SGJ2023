@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     private float horizontalInput;
     private Rigidbody2D playerRb;
+    private SpriteRenderer playerRenderer;
+
+    public float jumpForce;
 
     PhotonView view;
 
@@ -13,6 +16,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb= GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
+        playerRenderer = GetComponent<SpriteRenderer>();
     }
 
     public float speed = 10;
@@ -22,8 +26,7 @@ public class PlayerController : MonoBehaviour
         if (view.IsMine)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
-            playerRb.velocity = new Vector3(horizontalInput * speed, 0, 0);
-
+            playerRb.velocity = new Vector3(horizontalInput * speed, playerRb.velocity.y, 0);
         }
         
     }
@@ -35,11 +38,12 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 this.gameObject.transform.position = new Vector2(-2, 0);
+                playerRb.velocity = new Vector3(0, 0, 0);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                playerRb.AddForce(Vector3.up * 3000);
+                playerRb.AddForce(Vector3.up * jumpForce);
             }
         }
     }
