@@ -24,6 +24,16 @@ public class PlayerController : MonoBehaviour
             horizontalInput = Input.GetAxisRaw("Horizontal");
             playerRb.velocity = new Vector3(horizontalInput * speed, 0, 0);
         }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            this.gameObject.transform.position = new Vector2(-2, 0);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.AddForce(Vector3.up * 3000);
+        }
         
     }
 }
