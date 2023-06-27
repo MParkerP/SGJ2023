@@ -12,14 +12,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
 
     PhotonView view;
-    PhotonTransformViewClassic playerPTVC;
 
     private void Start()
     {
         playerRb= GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
         playerRenderer = GetComponent<SpriteRenderer>();
-        playerPTVC = GetComponent<PhotonTransformViewClassic>();
     }
 
     public float speed = 10;
@@ -38,8 +36,6 @@ public class PlayerController : MonoBehaviour
     {
         if (view.IsMine)
         {
-            playerPTVC.SetSynchronizedValues(playerRb.velocity, 0);
-
             if (Input.GetKeyDown(KeyCode.R))
             {
                 this.gameObject.transform.position = new Vector2(-2, 0);
@@ -51,6 +47,11 @@ public class PlayerController : MonoBehaviour
                 playerRb.AddForce(Vector3.up * jumpForce);
             }
         }
+        else
+        {
+            playerRb.simulated = false;
+        }
+
     }
 
 }
